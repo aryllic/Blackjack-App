@@ -24,7 +24,7 @@ async function updateLobbies(navigation, setLobbyButtons, setloadingIndicatorHid
     setLobbyButtons([]);
 
     try {
-        const response = await fetch("https://potential-fishstick-xp4p5v4q6xwf64gp-3000.app.github.dev/api/lobbies");
+        const response = await fetch("https://bookish-goldfish-4vrvjwr95vjf5549-3000.app.github.dev/api/lobbies");
         const data = await response.json();
 
         const lobbies = [];
@@ -69,7 +69,7 @@ async function joinLobby(navigation, lobby, dispatch, updateFunction) {
         requesting = true;
 
         try {
-            const response = await fetch(`https://potential-fishstick-xp4p5v4q6xwf64gp-3000.app.github.dev/api/lobby/${lobby.id}`);
+            const response = await fetch(`https://bookish-goldfish-4vrvjwr95vjf5549-3000.app.github.dev/api/lobby/${lobby.id}`);
             const data = await response.json();
 
             if (!data) {

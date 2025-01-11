@@ -66,7 +66,7 @@ export default function GameScreen({ route, navigation }) {
     const gameViewRef = useRef();
 
     useEffect(() => {
-        socket = io(`https://potential-fishstick-xp4p5v4q6xwf64gp-3000.app.github.dev/gamesockets/${route.params.gameId}`, {
+        socket = io(`https://bookish-goldfish-4vrvjwr95vjf5549-3000.app.github.dev/gamesockets/${route.params.gameId}`, {
             reconnection: false,
             extraHeaders: {
                 username: route.params.username

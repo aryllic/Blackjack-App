@@ -37,7 +37,7 @@ export default function LobbyScreen({ route, navigation }) {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        socket = io(`https://potential-fishstick-xp4p5v4q6xwf64gp-3000.app.github.dev/lobbysockets/${route.params.lobby.id}`, {
+        socket = io(`https://bookish-goldfish-4vrvjwr95vjf5549-3000.app.github.dev/lobbysockets/${route.params.lobby.id}`, {
             reconnection: false,
             extraHeaders: {
                 username: route.params.username,
