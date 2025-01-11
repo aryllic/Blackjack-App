@@ -1,6 +1,6 @@
 import { StatusBar, StyleSheet, Text, SafeAreaView, ScrollView, ActivityIndicator, TextInput } from 'react-native';
 import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { setOpenWindow } from '../redux/openWindowSlice';
 import { setErrorWindowMsg } from '../redux/errorWindowMsgSlice';
@@ -24,7 +24,7 @@ async function updateLobbies(navigation, setLobbyButtons, setloadingIndicatorHid
     setLobbyButtons([]);
 
     try {
-        const response = await fetch("https://1a00c07f-144f-4f30-8b69-65c872c7eb1f-00-2aig3or9abes5.janeway.replit.dev/api/lobbies");
+        const response = await fetch("https://potential-fishstick-xp4p5v4q6xwf64gp-3000.app.github.dev/api/lobbies");
         const data = await response.json();
 
         const lobbies = [];
@@ -69,7 +69,7 @@ async function joinLobby(navigation, lobby, dispatch, updateFunction) {
         requesting = true;
 
         try {
-            const response = await fetch(`https://1a00c07f-144f-4f30-8b69-65c872c7eb1f-00-2aig3or9abes5.janeway.replit.dev/api/lobby/${lobby.id}`);
+            const response = await fetch(`https://potential-fishstick-xp4p5v4q6xwf64gp-3000.app.github.dev/api/lobby/${lobby.id}`);
             const data = await response.json();
 
             if (!data) {

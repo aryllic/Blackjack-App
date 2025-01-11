@@ -1,5 +1,5 @@
 import { StatusBar, StyleSheet, Text, SafeAreaView, View } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { setOpenWindow } from '../redux/openWindowSlice';
 

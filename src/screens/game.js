@@ -1,5 +1,5 @@
 import { StatusBar, StyleSheet, SafeAreaView } from 'react-native';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { setMoney } from '../redux/moneySlice';
@@ -42,7 +42,7 @@ function combineDeckBet(bet) {
     return totalBet;
 };
 
-cardValue = function (rank) {
+function cardValue(rank) {
     let number = Number(rank);
   
     if (!number) {
@@ -54,7 +54,7 @@ cardValue = function (rank) {
     };
   
     return number;
-  };
+};
 
 export default function GameScreen({ route, navigation }) {
     const [players, setPlayers] = useState([]);
@@ -63,8 +63,10 @@ export default function GameScreen({ route, navigation }) {
     const money = useSelector(state => state.money.money);
     const dispatch = useDispatch();
 
+    const gameViewRef = useRef();
+
     useEffect(() => {
-        socket = io(`https://1a00c07f-144f-4f30-8b69-65c872c7eb1f-00-2aig3or9abes5.janeway.replit.dev/gamesockets/${route.params.gameId}`, {
+        socket = io(`https://potential-fishstick-xp4p5v4q6xwf64gp-3000.app.github.dev/gamesockets/${route.params.gameId}`, {
             reconnection: false,
             extraHeaders: {
                 username: route.params.username
@@ -83,6 +85,7 @@ export default function GameScreen({ route, navigation }) {
         socket.on("playersUpdated", (gamePlayers) => {
             player = gamePlayers.find(player => player.id == playerId);
             setPlayers(gamePlayers);
+            gameViewRef.current.updateDeckStateIcons();
         });
 
         socket.on("dealerCardsUpdated", (cards) => {
@@ -108,6 +111,7 @@ export default function GameScreen({ route, navigation }) {
         });
 
         socket.on("roundEnded", () => {
+            gameViewRef.current.resetDeckStateIcons();
             updateMoney(dispatch);
         });
 
@@ -117,9 +121,9 @@ export default function GameScreen({ route, navigation }) {
             });
         });
 
-        /*socket.on("playAnimation", (animation) => {
-
-        });*/
+        socket.on("playAnimation", (data) => {
+            gameViewRef.current.playAnimation(data);
+        });
 
         socket.on("disconnect", (reason) => {
             if (socket) {
@@ -161,7 +165,6 @@ export default function GameScreen({ route, navigation }) {
     useEffect(() => {
         dynamicMoney = money;
     }, [money]);
-    //UPDATE MONEY WHEN LEAVING SCREEN
 
     return (
         <SafeAreaView style={styles.container}>
@@ -182,12 +185,14 @@ export default function GameScreen({ route, navigation }) {
             <GameView
                 players={players}
                 dealerCards={dealerCards}
+                ref={gameViewRef}
             />
             <GameControls
                 state={gameSate}
                 bet={(amount) => {
                     if (socket) {
                         if (dynamicMoney >= amount) {
+                            setGameState("betWaiting");
                             dispatch(setMoney(dynamicMoney - amount));
                             socket.emit("addBet", amount);
                         } else {
@@ -201,6 +206,7 @@ export default function GameScreen({ route, navigation }) {
                         const deckBet = combineDeckBet(player.bets[0]);
                         
                         if (deckBet > 0) {
+                            setGameState("betWaiting");
                             dispatch(setMoney(dynamicMoney + deckBet));
                             socket.emit("rebet");
                         };
@@ -209,7 +215,7 @@ export default function GameScreen({ route, navigation }) {
                 placeBet={() => {
                     if (socket) {
                         if (player.bets[0][0].length > 0) {
-                            setGameState("waiting");
+                            setGameState("betWaiting");
                             socket.emit("placeBet");
                         } else {
                             dispatch(setErrorWindowMsg("You must place a bet!"));

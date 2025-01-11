@@ -32,7 +32,7 @@ async function createLobby(navigation, lobbySettings, dispatch) {
         requesting = true;
 
         try {
-            const response = await fetch("https://1a00c07f-144f-4f30-8b69-65c872c7eb1f-00-2aig3or9abes5.janeway.replit.dev/api/lobby", {
+            const response = await fetch("https://potential-fishstick-xp4p5v4q6xwf64gp-3000.app.github.dev/api/lobby", {
                 method: 'POST',
                 body: JSON.stringify({ hostName: lobbySettings.hostName, maxPlayers: lobbySettings.maxPlayers }),
                 headers: { 'Content-Type': 'application/json' }

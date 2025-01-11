@@ -90,7 +90,5 @@ export default function App() {
   );
 };
 
-//TODO: FIX BUG WITH PLAYER VIEW BEING RENDERED AT THE TOP WHEN ANOTHER PLAYER SPLITS (ALIGN SELF TO FLEX END)
-
 // cd android
 // ./gradlew assembleRelease

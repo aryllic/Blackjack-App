@@ -80,6 +80,20 @@ export default function GameControls(props) {
                 <ControlButton style={{ flex: 1, backgroundColor: "#00ff0050" }} text="Deal" onPress={props.placeBet} />
             </View>
         </View>
+    ) : props.state == "betWaiting" ? (
+        <View style={[styles.container, {height: "25%"}]}>
+            <View style={[styles.buttonContainer, { height: "50%" }]}>
+                <ChipButton text="10K" source={require("../img/chips/Blue_TopDown.png")} disabled={true} />
+                <ChipButton text="50K" source={require("../img/chips/Yellow_TopDown.png")} disabled={true} />
+                <ChipButton text="100K" source={require("../img/chips/Red_TopDown.png")} disabled={true} />
+                <ChipButton text="500K" source={require("../img/chips/Green_TopDown.png")} disabled={true} />
+                <ChipButton text="1M" source={require("../img/chips/Black_TopDown.png")} disabled={true} />
+            </View>
+            <View style={[styles.buttonContainer, { marginTop: "auto", height: "50%" }]}>
+                <ControlButton style={{ flex: 1, backgroundColor: "#ff000050" }} text="Rebet" disabled={true} />
+                <ControlButton style={{ flex: 1, backgroundColor: "#00ff0050" }} text="Deal" disabled={true} />
+            </View>
+        </View>
     ) : props.state == "waiting" ? (
         <View style={[styles.container, {height: "15%"}]}>
             <View style={styles.buttonContainer}>
@@ -103,10 +117,8 @@ export default function GameControls(props) {
 
 const styles = EStyleSheet.create({
     container: {
-        //position: "absolute",
         flexDirection: "column",
         marginTop: "auto",
-        //bottom: 0,
         padding: 15,
         width: "100%",
         columnGap: 10,
